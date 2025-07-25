@@ -1,20 +1,15 @@
 class Solution {
-    public int maxSum(int[] nums) {
-        int max = 0;
-        Map<Integer, Integer> hm = new HashMap<>();
 
-        for(int i=0; i<nums.length; i++){
-           hm.put(nums[i], hm.getOrDefault(nums[i],0)+1);
-        }
-        for(Map.Entry<Integer, Integer> en : hm.entrySet()){
-            if(en.getKey()>0)
-            {
-                max += en.getKey();
+    public int maxSum(int[] nums) {
+        Set<Integer> positiveNumsSet = new HashSet<>();
+        for (int num : nums) {
+            if (num > 0) {
+                positiveNumsSet.add(num);
             }
         }
-        Arrays.sort(nums);
-
-        if(nums[nums.length-1]<0) return nums[nums.length-1];
-        return max;
+        if (positiveNumsSet.isEmpty()) {
+            return Arrays.stream(nums).max().getAsInt();
+        }
+        return positiveNumsSet.stream().mapToInt(Integer::intValue).sum();
     }
 }
